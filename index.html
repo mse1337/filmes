@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de Filmes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Buscador de Filmes</h1>
+
+  <div class="busca">
+  <input type="text" id="busca" placeholder="Digite o nome do filme...">
+  <button id="btn-buscar">Buscar</button>
+</div>
+
+  <div id="resultados"></div>
+
+ <script>        
+ const btn = document.querySelector('#btn-buscar');
+const input = document.querySelector('#busca');
+const resultados = document.querySelector('#resultados');
+const API_KEY = '839dddd60706058e2981d8594524ef04';
+function carregarPopulares() {
+  fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-BR`)
+    .then(function(resposta) {
+      return resposta.json();
+    })
+    .then(function(dados) {
+      resultados.innerHTML = '';
+
+      dados.results.forEach(function(filme) {
+        const capa = filme.poster_path 
+          ? `https://image.tmdb.org/t/p/w200${filme.poster_path}` 
+          : 'https://placehold.co/200x300?text=Sem+Capa';
+
+        const ano = filme.release_date 
+          ? filme.release_date.slice(0, 4) 
+          : 'Sem data';
+
+        const nota = filme.vote_average 
+          ? filme.vote_average.toFixed(1) 
+          : 'N/A';
+
+        resultados.innerHTML += `
+          <div>
+            <img src="${capa}" alt="${filme.title}">
+            <h2>${filme.title}</h2>
+            <p class="info">⭐ ${nota} · 📅 ${ano}</p>
+            <p>${filme.overview}</p>
+          </div>
+        `;
+      });
+    });
+}
+
+carregarPopulares();
+
+btn.addEventListener('click', function() {
+  const filme = input.value;
+
+  fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${filme}&language=pt-BR`)
+    .then(function(resposta) {
+      return resposta.json();
+    })
+    .then(function(dados) {
+      resultados.innerHTML = '';
+
+      dados.results.forEach(function(filme) {
+        const capa = filme.poster_path 
+          ? `https://image.tmdb.org/t/p/w200${filme.poster_path}` 
+          : 'https://placehold.co/200x300?text=Sem+Capa';
+
+        const ano = filme.release_date 
+          ? filme.release_date.slice(0, 4) 
+          : 'Sem data';
+
+        const nota = filme.vote_average 
+          ? filme.vote_average.toFixed(1) 
+          : 'N/A';
+
+        resultados.innerHTML += `
+          <div>
+            <img src="${capa}" alt="${filme.title}">
+            <h2>${filme.title}</h2>
+            <p class="info">⭐ ${nota} · 📅 ${ano}</p>
+            <p>${filme.overview}</p>
+          </div>
+        `;
+      });
+    });
+});
+carregarPopulares();
+input.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    btn.click();
+  }
+});  
+</script>   
+
+
+</body>
+</html>
