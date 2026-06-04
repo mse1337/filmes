@@ -19,6 +19,12 @@
 
   <div id="resultados"></div>
   <div id="paginacao">
+    <div id="modal" class="modal-fechado">
+  <div id="modal-conteudo">
+    <button id="fechar-modal">✕</button>
+    <div id="modal-info"></div>
+  </div>
+</div>
   <button id="btn-anterior">← Anterior</button>
   <span id="pagina-atual">Página 1</span>
   <button id="btn-proximo">Próximo →</button>
@@ -98,14 +104,14 @@ function buscarFilmes() {
           ? filme.vote_average.toFixed(1) 
           : 'N/A';
 
-        resultados.innerHTML += `
-          <div>
-            <img src="${capa}" alt="${filme.title}">
-            <h2>${filme.title}</h2>
-            <p class="info">⭐ ${nota} · 📅 ${ano}</p>
-            <p>${filme.overview}</p>
-          </div>
-        `;
+     resultados.innerHTML += `
+  <div onclick="abrirModal(${filme.id})" style="cursor:pointer">
+    <img src="${capa}" alt="${filme.title}">
+    <h2>${filme.title}</h2>
+    <p class="info">⭐ ${nota} · 📅 ${ano}</p>
+    <p>${filme.overview}</p>
+  </div>
+`;
       });
     });
 }
@@ -129,6 +135,46 @@ input.addEventListener('keypress', function(e) {
     btn.click();
   }
 });  
+const modal = document.querySelector('#modal');
+const modalInfo = document.querySelector('#modal-info');
+const fecharModal = document.querySelector('#fechar-modal');
+
+function abrirModal(id) {
+  fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=pt-BR`)
+    .then(function(resposta) {
+      return resposta.json();
+    })
+    .then(function(filme) {
+      const capa = filme.poster_path 
+        ? `https://image.tmdb.org/t/p/w300${filme.poster_path}` 
+        : 'https://placehold.co/150x225?text=Sem+Capa';
+
+      const duracao = filme.runtime ? `${filme.runtime} min` : 'N/A';
+      const nota = filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A';
+      const ano = filme.release_date ? filme.release_date.slice(0, 4) : 'N/A';
+      const generos = filme.genres.map(g => g.name).join(', ');
+
+      modalInfo.innerHTML = `
+        <img src="${capa}" alt="${filme.title}">
+        <h2>${filme.title}</h2>
+        <p>⭐ ${nota} · 📅 ${ano} · ⏱ ${duracao}</p>
+        <p>🎭 ${generos}</p>
+        <p style="clear:both; margin-top: 1rem">${filme.overview}</p>
+      `;
+
+      modal.classList.remove('modal-fechado');
+    });
+}
+
+fecharModal.addEventListener('click', function() {
+  modal.classList.add('modal-fechado');
+});
+
+modal.addEventListener('click', function(e) {
+  if (e.target === modal) {
+    modal.classList.add('modal-fechado');
+  }
+});
 </script>   
 
 
