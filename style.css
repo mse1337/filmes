@@ -96,3 +96,32 @@ header {
 .logo span {
   color: #c8f135;
 }
+#paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+#paginacao button {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  background: #18181b;
+  color: #f0f0f0;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.2s;
+}
+
+#paginacao button:hover {
+  background: #c8f135;
+  color: #0e0e10;
+}
+
+#span {
+  font-size: 0.9rem;
+  color: #888;
+}

@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-  <div class="logo">Victor<span>Henrique</span>Dev</div>
+  <div class="logo">mse1337<span>.dev</span></div>
 </header>
   <h1>Buscador de Filmes</h1>
 
@@ -18,12 +18,19 @@
 </div>
 
   <div id="resultados"></div>
+  <div id="paginacao">
+  <button id="btn-anterior">← Anterior</button>
+  <span id="pagina-atual">Página 1</span>
+  <button id="btn-proximo">Próximo →</button>
+</div>
 
  <script>        
  const btn = document.querySelector('#btn-buscar');
 const input = document.querySelector('#busca');
 const resultados = document.querySelector('#resultados');
 const API_KEY = '839dddd60706058e2981d8594524ef04';
+let paginaAtual = 1;
+let buscaAtual = '';
 function carregarPopulares() {
   fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-BR`)
     .then(function(resposta) {
@@ -60,14 +67,23 @@ function carregarPopulares() {
 carregarPopulares();
 
 btn.addEventListener('click', function() {
-  const filme = input.value;
+  buscaAtual = input.value;
+  paginaAtual = 1;
+  buscarFilmes();
+});
 
-  fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${filme}&language=pt-BR`)
+function buscarFilmes() {
+  const url = buscaAtual 
+    ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${buscaAtual}&language=pt-BR&page=${paginaAtual}`
+    : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-BR&page=${paginaAtual}`;
+
+  fetch(url)
     .then(function(resposta) {
       return resposta.json();
     })
     .then(function(dados) {
       resultados.innerHTML = '';
+      document.querySelector('#pagina-atual').textContent = `Página ${paginaAtual}`;
 
       dados.results.forEach(function(filme) {
         const capa = filme.poster_path 
@@ -92,8 +108,22 @@ btn.addEventListener('click', function() {
         `;
       });
     });
+}
+
+document.querySelector('#btn-proximo').addEventListener('click', function() {
+  paginaAtual++;
+  buscarFilmes();
 });
-carregarPopulares();
+
+document.querySelector('#btn-anterior').addEventListener('click', function() {
+  if (paginaAtual > 1) {
+    paginaAtual--;
+    buscarFilmes();
+  }
+});
+function carregarPopulares() {
+  buscarFilmes();
+}
 input.addEventListener('keypress', function(e) {
   if (e.key === 'Enter') {
     btn.click();
