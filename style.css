@@ -38,7 +38,7 @@ button {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   border: none;
-  background: #c8f135;
+  background: #0004ff;
   color: #0e0e10;
   font-weight: bold;
   cursor: pointer;
@@ -75,7 +75,7 @@ button {
 }
 
 .info {
-  color: #c8f135;
+  color: #0004ff;
   font-size: 0.85rem;
   padding: 0 0.75rem;
 }
@@ -96,7 +96,7 @@ header {
 }
 
 .logo span {
-  color: #c8f135;
+  color: #0004ff;
 }
 
 #paginacao {
@@ -119,7 +119,7 @@ header {
 }
 
 #paginacao button:hover {
-  background: #c8f135;
+  background: #0004ff;
   color: #0e0e10;
 }
 
@@ -186,7 +186,7 @@ header {
   text-align: center;
   padding: 2rem;
   font-size: 1.1rem;
-  color: #c8f135;
+  color: #0004ff;
   animation: piscar 1s ease-in-out infinite;
   width: 100%;
   display: block;
@@ -222,14 +222,14 @@ header {
 }
 
 .btn-genero:hover {
-  border-color: #c8f135;
-  color: #c8f135;
+  border-color: #0004ff;
+  color: #0004ff;
 }
 
 .btn-genero.ativo {
-  background: #c8f135;
+  background: #0004ff;
   color: #0e0e10;
-  border-color: #c8f135;
+  border-color: #0004ff;
 }
 .btn-favorito {
   display: block;
