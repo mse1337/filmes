@@ -393,3 +393,24 @@ button:hover {
   line-height: 1.6;
   margin-bottom: 0.5rem;
 }
+.btn-voltar {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+  transition: all 0.2s;
+}
+
+.btn-voltar:hover {
+  border-color: var(--accent);
+}
+
+#vazio {
+  text-align: center;
+  padding: 4rem;
+  color: var(--muted);
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+}

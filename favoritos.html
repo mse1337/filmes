@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberFlix — Favoritos</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="logo">mse1337<span>.dev</span></div>
+  <a href="index.html" class="btn-voltar">← VOLTAR</a>
+</header>
+
+<h1>Cyber<span>Favs</span></h1>
+
+<div id="resultados"></div>
+
+<div id="vazio" style="display:none">
+  <p>// NENHUM FILME FAVORITADO AINDA</p>
+</div>
+
+<script>
+  const resultados = document.querySelector('#resultados');
+  const vazio = document.querySelector('#vazio');
+  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+  if (favoritos.length === 0) {
+    vazio.style.display = 'block';
+  } else {
+    favoritos.forEach(function(filme) {
+      resultados.innerHTML += `
+        <div>
+          <img src="${filme.capa}" alt="${filme.titulo}">
+          <h2>${filme.titulo}</h2>
+          <button class="btn-favorito favoritado" onclick="remover(${filme.id})">❤️ Remover</button>
+        </div>
+      `;
+    });
+  }
+
+  function remover(id) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const novos = favoritos.filter(f => f.id !== id);
+    localStorage.setItem('favoritos', JSON.stringify(novos));
+    location.reload();
+  }
+</script>
+
+</body>
+</html>
