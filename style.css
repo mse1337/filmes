@@ -73,11 +73,13 @@ button {
   padding: 0 0.75rem 0.75rem;
   line-height: 1.5;
 }
+
 .info {
   color: #c8f135;
   font-size: 0.85rem;
   padding: 0 0.75rem;
 }
+
 header {
   display: flex;
   justify-content: space-between;
@@ -96,6 +98,7 @@ header {
 .logo span {
   color: #c8f135;
 }
+
 #paginacao {
   display: flex;
   justify-content: center;
@@ -108,7 +111,6 @@ header {
 #paginacao button {
   padding: 0.5rem 1.25rem;
   border-radius: 8px;
-  border: none;
   background: #18181b;
   color: #f0f0f0;
   cursor: pointer;
@@ -121,10 +123,6 @@ header {
   color: #0e0e10;
 }
 
-#span {
-  font-size: 0.9rem;
-  color: #888;
-}
 .modal-fechado {
   display: none !important;
 }
@@ -165,3 +163,41 @@ header {
 }
 
 #modal-info img {
+  width: 150px;
+  border-radius: 8px;
+  float: left;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#modal-info h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+#modal-info p {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+#loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #c8f135;
+  animation: piscar 1s ease-in-out infinite;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.loading-fechado {
+  display: none !important;
+}
+
+@keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
