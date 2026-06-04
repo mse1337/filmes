@@ -5,7 +5,10 @@
 }
 
 body {
-  background: #0e0e10;
+  background-color: #040d0a;
+  background-image: linear-gradient(rgba(0,255,159,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,255,159,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
   color: #f0f0f0;
   font-family: sans-serif;
   padding: 2rem;
@@ -14,7 +17,12 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #00ff9f, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .busca {
@@ -38,7 +46,7 @@ button {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   border: none;
-  background: #0004ff;
+  background: #00ff9f;
   color: #0e0e10;
   font-weight: bold;
   cursor: pointer;
@@ -75,7 +83,7 @@ button {
 }
 
 .info {
-  color: #0004ff;
+  color: #00ff9f;
   font-size: 0.85rem;
   padding: 0 0.75rem;
 }
@@ -96,7 +104,7 @@ header {
 }
 
 .logo span {
-  color: #0004ff;
+  color: #00ff9f;
 }
 
 #paginacao {
@@ -119,7 +127,7 @@ header {
 }
 
 #paginacao button:hover {
-  background: #0004ff;
+  background: #00ff9f;
   color: #0e0e10;
 }
 
@@ -186,7 +194,7 @@ header {
   text-align: center;
   padding: 2rem;
   font-size: 1.1rem;
-  color: #0004ff;
+  color: #00ff9f;
   animation: piscar 1s ease-in-out infinite;
   width: 100%;
   display: block;
@@ -222,14 +230,14 @@ header {
 }
 
 .btn-genero:hover {
-  border-color: #0004ff;
-  color: #0004ff;
+  border-color: #00ff9f;
+  color: #00ff9f;
 }
 
 .btn-genero.ativo {
-  background: #0004ff;
+  background: #00ff9f;
   color: #0e0e10;
-  border-color: #0004ff;
+  border-color: #00ff9f;
 }
 .btn-favorito {
   display: block;
