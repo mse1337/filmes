@@ -18,6 +18,16 @@
   <input type="text" id="busca" placeholder="Digite o nome do filme...">
   <button id="btn-buscar">Buscar</button>
 </div>
+<div id="generos">
+  <button class="btn-genero ativo" data-id="">Todos</button>
+  <button class="btn-genero" data-id="28">Ação</button>
+  <button class="btn-genero" data-id="35">Comédia</button>
+  <button class="btn-genero" data-id="27">Terror</button>
+  <button class="btn-genero" data-id="18">Drama</button>
+  <button class="btn-genero" data-id="878">Ficção Científica</button>
+  <button class="btn-genero" data-id="10749">Romance</button>
+  <button class="btn-genero" data-id="16">Animação</button>
+</div>
 
 <div id="loading" class="loading-fechado">Buscando filmes... 🎬</div>
 
@@ -48,14 +58,17 @@
   const API_KEY = '839dddd60706058e2981d8594524ef04';
   let paginaAtual = 1;
   let buscaAtual = '';
+  let generoAtual = '';
 
- function buscarFilmes() {
-  loading.classList.remove('loading-fechado');
-  resultados.innerHTML = '';
+  function buscarFilmes() {
+    loading.classList.remove('loading-fechado');
+    resultados.innerHTML = '';
 
-  const url = buscaAtual 
-    ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${buscaAtual}&language=pt-BR&page=${paginaAtual}`
-    : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-BR&page=${paginaAtual}`;
+    const url = buscaAtual 
+      ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${buscaAtual}&language=pt-BR&page=${paginaAtual}`
+      : generoAtual
+        ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=pt-BR&page=${paginaAtual}&with_genres=${generoAtual}`
+        : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-BR&page=${paginaAtual}`;
 
     fetch(url)
       .then(function(resposta) { return resposta.json(); })
@@ -70,17 +83,22 @@
           const ano = filme.release_date ? filme.release_date.slice(0, 4) : 'Sem data';
           const nota = filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A';
 
-          resultados.innerHTML += `
-            <div onclick="abrirModal(${filme.id})" style="cursor:pointer">
-              <img src="${capa}" alt="${filme.title}">
-              <h2>${filme.title}</h2>
-              <p class="info">⭐ ${nota} · 📅 ${ano}</p>
-              <p>${filme.overview}</p>
-            </div>
-          `;
+          const favoritado = favoritos.some(f => f.id === filme.id);
+
+resultados.innerHTML += `
+  <div onclick="abrirModal(${filme.id})" style="cursor:pointer">
+    <img src="${capa}" alt="${filme.title}">
+    <h2>${filme.title}</h2>
+    <p class="info">⭐ ${nota} · 📅 ${ano}</p>
+    <p>${filme.overview}</p>
+    <button class="btn-favorito ${favoritado ? 'favoritado' : ''}" onclick="favoritar(event, ${filme.id}, '${filme.title}', '${capa}')">
+      ${favoritado ? '❤️ Favoritado' : '🤍 Favoritar'}
+    </button>
+  </div>
+`;
         });
       });
-}
+  }
 
   btn.addEventListener('click', function() {
     buscaAtual = input.value;
@@ -131,6 +149,32 @@
   modal.addEventListener('click', function(e) {
     if (e.target === modal) { modal.classList.add('modal-fechado'); }
   });
+
+  document.querySelectorAll('.btn-genero').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelector('.btn-genero.ativo').classList.remove('ativo');
+      this.classList.add('ativo');
+      generoAtual = this.dataset.id;
+      paginaAtual = 1;
+      buscarFilmes();
+    });
+  });
+let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+function favoritar(event, id, titulo, capa) {
+  event.stopPropagation();
+  
+  const index = favoritos.findIndex(f => f.id === id);
+  
+  if (index === -1) {
+    favoritos.push({ id, titulo, capa });
+  } else {
+    favoritos.splice(index, 1);
+  }
+  
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  buscarFilmes();
+}
 
   buscarFilmes();
 </script>
