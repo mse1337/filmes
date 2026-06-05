@@ -414,3 +414,30 @@ button:hover {
   letter-spacing: 3px;
   font-size: 0.9rem;
 }
+/* ASSINATURA / PORTFÓLIO */
+.watermark-link {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  color: var(--muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  z-index: 9999;
+  background: var(--bg);
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.watermark-link:hover {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+  transform: translateY(-2px);
+}
